@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Share Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='library_kamote.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- ------------------------------- nav bar ------------------------------- -->
+    <div class="container-nav-bar">
+        <h1 class="m-r-auto">Recipe Share</h1>
+    </div>
+
+    <div class="view-main">
+        <div class="view j-between">
+            <!-- ---------------------------- register form ---------------------------- -->
+            <div class="container p3 w30 flex v j-start a-start bg-none">
+                <h1 class="m-b2">Register</h1>
+                <form method="post" action="/submit-register" class="form g3">
+                    <!-- first name -->
+                    <label for="form_first_name" class="input">
+                        <span class="f-textwrap-none">First Name:</span>
+                        <input type="text" name="form_first_name" class="w15" value="{{ session['form_first_name_register'] }}">
+                    </label>
+                    <!-- last name -->
+                    <label for="form_last_name" class="input">
+                        <span class="f-textwrap-none">Last Name:</span>
+                        <input type="text" name="form_last_name" class="w15" value="{{ session['form_last_name_register'] }}">
+                    </label>
+                    <!-- email -->
+                    <label for="form_email" class="input">
+                        <span class="f-textwrap-none">Email:</span>
+                        <input type="text" name="form_email" class="w15" value="{{ session['form_email_register'] }}">
+                    </label>
+                    <!-- password -->
+                    <label for="form_password" class="input">
+                        <span class="f-textwrap-none">Password:</span>
+                        <input type="password" name="form_password" class="w15">
+                    </label>
+                    <!-- confirm apssword -->
+                    <label for="form_confirm_password" class="input">
+                        <span class="f-textwrap-none">Confirm pswd:</span>
+                        <input type="password" name="form_confirm_password" class="w15">
+                    </label>
+                    <!--` button -->
+                    <input type="submit" class="button a-self-end" value="Submit">
+                    <!--` error messages -->
+                    {% for message in get_flashed_messages(category_filter=['register']) %}
+                    <div class="container-mini w-max flex j-center a-center error">
+                        <span>{{ message }}</span>
+                    </div>
+                    {% endfor %}
+                </form>
+            </div>
+            <!-- ----------------------------- log in form ----------------------------- -->
+            <div class="container p3 w30 flex v j-start a-start bg-none">
+                <h1 class="m-b2">Log In</h1>
+                <form method="post" action="/submit-login" class="form g3">
+                    <!-- email -->
+                    <label for="form_email" class="input">
+                        <span class="f-textwrap-none">Email:</span>
+                        <input type="text" name="form_email" class="w15" value="{{ session['form_email_login'] }}">
+                    </label>
+                    <!-- password -->
+                    <label for="form_password" class="input">
+                        <span class="f-textwrap-none">Password:</span>
+                        <input type="password" name="form_password" class="w15">
+                    </label>
+                    <input type="submit" class="button a-self-end" value="Submit">
+                    <!--` error messages -->
+                    {% for message in get_flashed_messages(category_filter=['login']) %}
+                    <div class="error">
+                        <span>{{ message }}</span>
+                    </div>
+                    {% endfor %}
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="{{ url_for('static', filename='library_kamote.js') }}"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

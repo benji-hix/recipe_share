@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEFAULT</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='library_kamote.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- ------------------------------- nav bar ------------------------------- -->
+    <div class="container-nav-bar">
+        <h1>Recipe Share</h1>
+        <h2 class="f2">|</h2>
+        <h2 class="m-r-auto"> Welcome, {{ session['user_name'] }}</h2>
+        <a href="/recipes/user/{{ session['user_id'] }}" class="m-l-auto m-r1">My recipes</a>
+        <a href="/recipes" class="m-r1">All recipes</a>
+        <a href="/logout">Logout</a>
+    </div>
+    <!-- ---------------------------- main content ----------------------------- -->
+    <div class="view-main">
+       <div class="container m-center-h m-t3">
+        <h2>Add a New Recipe</h2>
+
+            <form class="form h g2" action="/submit-recipe" method="post">
+
+                <div class="container flex v g3 w30">
+                    <label for="form_name" class="input">
+                        <span>Name:</span>
+                        <input type="text" name="form_name" class="textarea1" value="{{ session['form_name_create'] }}">
+                    </label>
+                    <label for="form_description" class="input a-start">
+                        <span>Description:</span>
+                        <textarea name="form_description" class="textarea1 h4">{{ session['form_description_create'] }}</textarea>
+                    </label>
+                    <label for="form_instructions" class="input a-start">
+                        <span>Instructions:</span>
+                        <textarea name="form_instructions" class="textarea1 h5">{{ session['form_instructions_create'] }}</textarea>
+                    </label>
+                </div>
+
+                <div class="container flex v a-center g3 w20">
+                    <label for="form_date" class="input v a-center w-content">
+                        <span>Date Created:</span>
+                        <input type="date" class="date-time" name="form_date">
+                    </label>
+
+                    <span class="under30">Under 30 minutes?</span>
+                    <div class="input w-content g1">
+                        <label for="Yes" class="input w-content">
+                            <input type="radio" value="Yes" name="form_under_30">
+                            <span class="f-whitespace-off">Yes</span>
+                            </label>
+                        <label for="No" class="input w-content">
+                            <input type="radio" value="No" name="form_under_30">
+                            <span class="f-whitespace-off">No</span>
+                        </label>
+                    </div>
+
+                    <input type="submit" class="button m-center-h" value="Submit">
+                </div>
+            </form>
+            {% for message in get_flashed_messages(category_filter=['recipe']) %}
+            <div class="error w25">
+                <span>{{ message }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="{{ url_for('static', filename='library_kamote.js') }}"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEFAULT</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='library_kamote.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- nav bar -->
+    <div class="container-nav-bar">
+        <h1>Recipe Share</h1>
+        <h2 class="f2">|</h2>
+        <h2 class="m-r-auto"> Welcome, {{ recipe.user_info.first_name }}</h2>
+        <a href="/recipes/user/{{ session['user_id'] }}" class="m-r1">My recipes</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <!-- main content -->
+    <div class="view-main">
+
+        <div class="container flex j-between a-end w-max m-0">
+            <span class="m-b0">All posted recipes:</span>
+            <a href="/recipe-create" class="m-left-auto m-b0">+ Create New Recipe</a>
+        </div>
+        <!-- table -->
+        <div class="container-recipes container br-1 w-max m-t-0">
+            <table class="table m-b2">
+                <thead>
+                    <tr>
+                        <th>Recipe Name</th>
+                        <th>Under 30 Minutes?</th>
+                        <th>Posted By</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% if all_recipes|length > 0 %}
+                    {% for row in all_recipes %}
+                    <tr>
+                        <td>{{ row.name }}</td>
+                        <td>{{ row.under_30 }}</td>
+                        <td>{{ row.user_info.first_name }}</td>
+                        {% if row.user_id == session['user_id'] %}
+                        <td>
+                            <div class="container-mini">
+                                <a href="/recipes/{{ row.id }}">view recipe</a> | 
+                                <a href="/recipes/edit/{{ row.id }}">edit</a> | 
+                                <a href="recipes/delete/{{ row.id }}">delete</a>
+                            </div>
+                        </td>
+                        {% else %}
+                        <td>
+                            <div class="container-mini">
+                                <a href="/recipes/{{ row.id }}">view recipe</a> 
+                            </div>
+                        </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+
+        
+            
+        
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="{{ url_for('static', filename='library_kamote.js') }}"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
